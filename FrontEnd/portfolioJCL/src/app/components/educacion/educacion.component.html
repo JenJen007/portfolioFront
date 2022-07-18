@@ -1,1 +1,119 @@
-<p>educacion works!</p>
+<div class="col-lg-12" id="titleEdu">
+    <h1>Educación  
+        <button class="btn mb-3" data-bs-toggle="modal" data-bs-target="#addEduModal" *ngIf="isLogged"><i id="plusIcon" class="fa-solid fa-square-plus"></i></button>
+    </h1>
+   
+</div>
+<div class="row" *ngFor="let educacion of educaciones">
+    <div class="col-lg-3 card mb-3" style="width: 15rem;">
+        <img [src]="educacion.imgEdu" class="img-fluid" id="imgnEdu" alt="AP">
+    </div>
+    <div class="col-lg-6">
+        <ul>
+            <li>
+                <h1 id="instituto">{{educacion.nameEdu}} 
+                <button (click)="actualizarEdu(educacion.idEdu)" class="btn mb-2" data-bs-toggle="modal" data-bs-target="#editEduModal" *ngIf="isLogged"><i id="penIcon" class="fa-solid fa-pen-to-square"></i></button>
+                <button (click)="borrarEdu(educacion.idEdu)" class="btn mb-2" *ngIf="isLogged"><i id="trashIcon" class="fa-solid fa-trash-can"></i></button>
+                </h1>
+                
+                <p id="titulo">{{educacion.titleEdu}}</p>-<h3>
+                    <time>{{educacion.fechaEduIni}}</time>-<time>{{educacion.fechaEduFin}}</time></h3>
+                <hr>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--Modal añadir-->
+<div class="modal fade" id="addEduModal" tabindex="-1" aria-labelledby="addEduModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEduModalLabel">Añadir Educación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formEdu" (ngSubmit)="agregarEdu()">
+                    <div class="form-group">
+                        <label for="name-Edu" class="form-label">Institucion</label>
+                        <input formControlName="nameEdu" type="text"  class="form-control" id="name-Edu" autocomplete="off">
+                        <span *ngIf="formEdu.get('nameEdu')?.invalid && formEdu.get('nameEdu')?.touched" class="text-danger">El nombre del instituto es requerido</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="title-Edu" class="form-label">Titulo</label>
+                        <input formControlName="titleEdu" type="text"  class="form-control" id="title-Edu" autocomplete="off">
+                        <span *ngIf="formEdu.get('titleEdu')?.invalid && formEdu.get('titleEdu')?.touched" class="text-danger">El titulo es requerido</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="img-Edu" class="form-label">Imagen URL</label>
+                        <input formControlName="imgEdu" type="text"  class="form-control" id="img-Edu" autocomplete="off">
+                        <span *ngIf="formEdu.get('imgEdu')?.invalid && formEdu.get('imgEdu')?.touched" class="text-danger">El link es requerido</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha-IniEdu" class="form-label">Fecha de Inicio</label>
+                        <input formControlName="fechaEduIni" type="text" class="form-control" id="fecha-IniEdu" autocomplete="off">
+                        <span *ngIf="formEdu.get('fechaEduIni')?.invalid && formEdu.get('fechaEduIni')?.touched" class="text-danger">La fecha de inicio es requerida</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha-FinEdu" class="form-label">Fecha de Finalizacion</label>
+                        <input formControlName="fechaEduFin" type="text" class="form-control" id="fecha-FinEdu" autocomplete="off">
+                        <span *ngIf="formEdu.get('fechaEduFin')?.invalid && formEdu.get('fechaEduFin')?.touched" class="text-danger">La fecha de finalizacion es requerida</span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button"  class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="submit" (click)="agregarEdu()" [disabled]="formEdu.invalid" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal editar-->
+<div class="modal fade" id="editEduModal" tabindex="-1" aria-labelledby="editEduModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editEduModalLabel">Editar Educación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formEdu" (ngSubmit)="editEducacion()">
+                    <div class="form-group">
+                        <label for="nombre-Edu" class="form-label">Institucion</label>
+                        <input formControlName="nameEdu" type="text"  class="form-control" id="nombre-Edu" autocomplete="off">
+                        <span *ngIf="formEdu.get('nameEdu')?.invalid && formEdu.get('nameEdu')?.touched" class="text-danger">El nombre del instituto es requerido</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="titulo-Edu" class="form-label">Titulo</label>
+                        <input formControlName="titleEdu" type="text"  class="form-control" id="titulo-Edu" autocomplete="off">
+                        <span *ngIf="formEdu.get('titleEdu')?.invalid && formEdu.get('titleEdu')?.touched" class="text-danger">El titulo es requerido</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="imgn-Edu" class="form-label">Imagen URL</label>
+                        <input formControlName="imgEdu" type="text"  class="form-control" id="imgn-Edu" autocomplete="off">
+                        <span *ngIf="formEdu.get('imgEdu')?.invalid && formEdu.get('imgEdu')?.touched" class="text-danger">El link es requerido</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha-EduIni" class="form-label">Fecha de Inicio</label>
+                        <input formControlName="fechaEduIni" type="text" class="form-control" id="fecha-EduIni" autocomplete="off">
+                        <span *ngIf="formEdu.get('fechaEduIni')?.invalid && formEdu.get('fechaEduIni')?.touched" class="text-danger">La fecha de inicio es requerida</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha-EduFin" class="form-label">Fecha de Finalizacion</label>
+                        <input formControlName="fechaEduFin" type="text" class="form-control" id="fecha-EduFin" autocomplete="off">
+                        <span *ngIf="formEdu.get('fechaEduFin')?.invalid && formEdu.get('fechaEduFin')?.touched" class="text-danger">La fecha de finalizacion es requerida</span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button"  class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="submit" (click)="editEducacion()" [disabled]="formEdu.invalid" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+  <!--Notificacion cuando no hay educaciones-->
+<div *ngIf="educaciones.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+    <div class="alert alert-info" role="alert">
+        <p>No hay educaciones para mostrar</p>
+    </div>
+</div>

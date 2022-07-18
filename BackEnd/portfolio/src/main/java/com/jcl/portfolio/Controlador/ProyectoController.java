@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,12 +37,12 @@ public class ProyectoController {
         return new ResponseEntity(listaProyecto,HttpStatus.OK);
     }
     
-    @GetMapping("/royectos/{idProye}")
+    @GetMapping("/proyectos/{idProye}")
     public ResponseEntity<ProyectoResponseDTO>oneProyecto(@PathVariable("idProye")Long idProye){
         ProyectoResponseDTO proyectoId = proyectoService.findById(idProye);
         return ResponseEntity.ok().body(proyectoId);
     }
-    
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/proyectos/nuevo")
     public ResponseEntity<ProyectoResponseDTO>newProyecto(@Valid @RequestBody ProyectoRequestDTO newProyecto){
         try {
@@ -50,13 +51,13 @@ public class ProyectoController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/proyectos/{idProye}")
     public ProyectoResponseDTO replaceProyecto(@Valid @RequestBody ProyectoRequestDTO newProyecto,
                                                @PathVariable("idProye")Long idProye){
         return proyectoService.update(newProyecto, idProye);
     }
-    
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/proyectos/{idProye}")
     public void deleteProyecto(@PathVariable("idProye")Long idProye){
         proyectoService.delete(idProye);

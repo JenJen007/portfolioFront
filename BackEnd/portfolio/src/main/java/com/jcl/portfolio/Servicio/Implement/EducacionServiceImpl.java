@@ -9,9 +9,11 @@ import com.jcl.portfolio.Repositorio.EducacionRepository;
 import com.jcl.portfolio.Servicio.EducacionService;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 public class EducacionServiceImpl implements EducacionService{
     
     private final EducacionRepository educacionRepository;

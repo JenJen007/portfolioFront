@@ -1,1 +1,14 @@
-<p>nav-bar works!</p>
+<nav class="navbar navbar-light" style="background-color: #00358e;">
+    <div class="container-fluid">
+      <a class="navbar-brand">
+        <img [src]="img" alt="" class="img-fluid" id="AP">
+        <img [src]="img2" alt="" class="img-fluid" id="INTI">
+    </a>
+    <div class="redes">
+        <a href="https://www.linkedin.com/feed/" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/jennylacoste/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <button type="button" class="btn btn-outline-light" (click)="login()" *ngIf="!isLogged">INGRESO</button>
+        <button type="button" class="btn btn-outline-light" (click)="onLogOut()" *ngIf="isLogged">CERRAR SESION</button>
+    </div>
+    </div>
+  </nav>

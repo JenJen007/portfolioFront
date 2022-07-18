@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,19 +30,20 @@ public class PersonaController {
     public PersonaController(PersonaService personaService){
         this.personaService = personaService;
     }
-    
+   
     @GetMapping("/personas")
     public ResponseEntity<List<PersonaResponseDTO>>all(){
         List<PersonaResponseDTO>listaPersona = personaService.getAll();
         return new ResponseEntity(listaPersona,HttpStatus.OK);
     }
-    
+  
     @GetMapping("/personas/{idUser}")
     public ResponseEntity<PersonaResponseDTO>onePersona(@PathVariable("idUser")Long idUser){
         PersonaResponseDTO personaId = personaService.findById(idUser);
         return ResponseEntity.ok().body(personaId);
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/personas/nueva")
     public ResponseEntity<PersonaResponseDTO>newPersona(@Valid @RequestBody PersonaRequestDTO newPersona){
         try {
@@ -51,12 +53,14 @@ public class PersonaController {
         }
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/personas/{idUser}")
     public PersonaResponseDTO replacePersona(@Valid @RequestBody PersonaRequestDTO newPersona,
                                                @PathVariable("idUser")Long idUser){
         return personaService.update(newPersona, idUser);
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/personas/{idUser}")
     public void deletePersona(@PathVariable("idUser")Long idUser){
         personaService.delete(idUser);

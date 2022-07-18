@@ -27,13 +27,14 @@ public class Skill implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_skill")
     private Long idSkill;
+    
+    @Column(name = "img_skill")
     @NotNull
     @Size(min = 1, max = 250, message = "no cumple con la longitud")
-    @Column(name = "img_skill")
     private String imgSkill;
-    @NotNull
-    @Size(min = 1, max = 50, message = "no cumple con la longitud")
+    
     @Column(name = "porcentaje")
+    @NotNull
     private int porcentaje;
 
     @Builder

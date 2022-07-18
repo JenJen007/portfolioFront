@@ -1,1 +1,75 @@
-<p>perfil-about works!</p>
+<div class="row" *ngIf="persona" >
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+        <div class="card mb-3" style="width: 18rem;">
+            <img [src]="persona.fotoPerfil" class="card-img-top img-fluid" alt="perfil" id="mifoto">
+            <div class="card-body">
+              <h1 class="card-text" id="name">{{persona.nombre}} {{persona.apellido}}</h1>
+              <p class="card-text" id="titulo">{{persona.titulo}}</p>
+              <p class="card-text" id="email">{{persona.email}}</p>
+              <p class="card-text" id="domicilio">{{persona.domicilio}}</p>
+            </div>
+          </div>
+    </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+            <span>
+                <h1>Acerca de mí 
+                    <button (click)="actualizarPerfil(persona.idUser)" class="btn mb-3" data-bs-toggle="modal" data-bs-target="#editPerfilModal" *ngIf="isLogged"><i class="fa-solid fa-pen-to-square"></i></button> </h1>
+                <p>{{persona.aboutMe}}</p>
+            </span>
+        </div>
+</div>
+
+<!-- Modal Editar-->
+<div class="modal fade" id="editPerfilModal" tabindex="-1" aria-labelledby="editPerfilModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editPerfilModalLabel">Editar Perfil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formPerfil" (ngSubmit)="editPerfil()">
+                    <div class="form-group">
+                        <label for="name-Pers" class="form-label">Nombre</label>
+                        <input formControlName="nombre" type="text"  class="form-control" id="name-Pers" autocomplete="off">
+                        <span *ngIf="formPerfil.get('nombre')?.invalid && formPerfil.get('nombre')?.touched" class="text-danger">El nombre es requerido</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido-Pers" class="form-label">Apellido</label>
+                        <input formControlName="apellido" type="text"  class="form-control" id="apellido-Pers" autocomplete="off">
+                        <span *ngIf="formPerfil.get('apellido')?.invalid && formPerfil.get('apellido')?.touched" class="text-danger">El apellido es requerido</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="domicilio-Pers" class="form-label">Domicilio</label>
+                        <input formControlName="domicilio" type="text"  class="form-control" id="domicilio-Pers" autocomplete="off">
+                        <span *ngIf="formPerfil.get('domicilio')?.invalid && formPerfil.get('domicilio')?.touched" class="text-danger">El domicilio es requerido</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="img-Pers" class="form-label">Imagen URL</label>
+                        <input formControlName="fotoPerfil" type="text"  class="form-control" id="img-Pers" autocomplete="off">
+                        <span *ngIf="formPerfil.get('fotoPerfil')?.invalid && formPerfil.get('fotoPerfil')?.touched" class="text-danger">El link es requerido</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="titulo-Pers" class="form-label">Titulo</label>
+                        <input formControlName="titulo" type="text" class="form-control" id="titulo-Pers" autocomplete="off">
+                        <span *ngIf="formPerfil.get('titulo')?.invalid && formPerfil.get('titulo')?.touched" class="text-danger">El titulo es requerido</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email-Pers" class="form-label">Email</label>
+                        <input formControlName="email" type="email" class="form-control" id="email-Pers" autocomplete="off">
+                        <span *ngIf="formPerfil.get('email')?.invalid && formPerfil.get('email')?.touched" class="text-danger">El email es requerido</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="about-me" class="form-label">About Me</label>
+                        <textarea formControlName="aboutMe" type="text" class="form-control" id="about-me" rows="8" autocomplete="off"></textarea>
+                        <span *ngIf="formPerfil.get('aboutMe')?.invalid && formPerfil.get('aboutMe')?.touched" class="text-danger">La descripcion es requerida</span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button"  class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="submit" (click)="editPerfil()" [disabled]="formPerfil.invalid" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

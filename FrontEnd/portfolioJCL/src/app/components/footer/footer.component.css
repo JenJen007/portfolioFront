@@ -1,0 +1,12 @@
+.row{
+    background: rgb(0, 4, 54);
+}
+footer{
+    color: #f0f7b8;
+    font-family: 'Charm', cursive;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    box-shadow: 3px -3px 7px rgb(71, 85, 82);
+}

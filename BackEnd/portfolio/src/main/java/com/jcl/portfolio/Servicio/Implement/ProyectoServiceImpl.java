@@ -9,9 +9,11 @@ import com.jcl.portfolio.Repositorio.ProyectoRepository;
 import com.jcl.portfolio.Servicio.ProyectoService;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 public class ProyectoServiceImpl implements ProyectoService{
     
     private final ProyectoRepository proyectoRepository;

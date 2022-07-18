@@ -16,10 +16,8 @@ public class SkillRequestDTO {
     
     @NotNull
     @Size(min = 1, max = 250, message = "no cumple con la longitud")
-   
     private String imgSkill;
+    
     @NotNull
-    @Size(min = 1, max = 50, message = "no cumple con la longitud")
-
     private int porcentaje;
 }

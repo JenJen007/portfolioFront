@@ -1,1 +1,91 @@
-<p>skill-hy-s works!</p>
+<div class="col-lg-12" id="titleSkill">
+    <h1>Hard & Soft Skills
+        <button class="btn mb-3" data-bs-toggle="modal" data-bs-target="#addSkillModal" *ngIf="isLogged"><i id="plusIcon" class="fa-solid fa-square-plus"></i></button>
+    </h1>
+</div>
+<div class="row" >
+    <div *ngFor="let skill of skills" class="col-sm-6 col-md-6 col-lg-4">
+        <ul>
+            <li>
+                    <circle-progress
+                    [percent]="skill.porcentaje"
+                    [radius]="100"
+                    [imageSrc]="skill.imgSkill"
+                    [outerStrokeWidth]="12"
+                    [outerStrokeColor]="'#4374b7'"
+                    [animation]="true"
+                    [animationDuration]="600"
+                  ></circle-progress>
+                <button (click)="actualizarSkill(skill.idSkill)" class="btn mb-2" data-bs-toggle="modal" data-bs-target="#editSkillModal" *ngIf="isLogged"><i id="penIcon" class="fa-solid fa-pen-to-square"></i></button>
+                <button (click)="borrarSkill(skill.idSkill)" class="btn mb-2" *ngIf="isLogged"><i id="trashIcon" class="fa-solid fa-trash-can"></i></button>
+                
+            </li>
+        </ul>
+    </div> 
+</div>
+
+<!--Modal añadir-->
+<div class="modal fade" id="addSkillModal" tabindex="-1" aria-labelledby="addSkillModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addSkillModalLabel">Añadir Skill</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formSk" (ngSubmit)="agregarSkill()">
+                    <div class="form-group">
+                        <label for="img-Skill" class="form-label">Habilidad Imagen URL</label>
+                        <input formControlName="imgSkill" type="text"  class="form-control" id="img-Skill" autocomplete="off">
+                        <span *ngIf="formSk.get('imgSkill')?.invalid && formSk.get('imgSkill')?.touched" class="text-danger">El link de imagen es requerido</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="porcentajes" class="form-label">Porcentaje</label>
+                        <input formControlName="porcentaje" type="text"  class="form-control" id="porcentajes" autocomplete="off">
+                        <span *ngIf="formSk.get('porcentaje')?.invalid && formSk.get('porcentaje')?.touched" class="text-danger">El porcentaje es requerido</span>
+                    </div>
+                </form> 
+            </div>
+            <div class="modal-footer">
+                <button type="button"  class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="submit"  (click)="agregarSkill()" [disabled]="formSk.invalid" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal editar-->
+<div class="modal fade" id="editSkillModal" tabindex="-1" aria-labelledby="editSkillModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editSkillModalLabel">Editar Skill</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formSk" (ngSubmit)="editarSkill()">
+                    <div class="form-group">
+                        <label for="imgn-Skill" class="form-label">Habilidad Imagen URL</label>
+                        <input formControlName="imgSkill" type="text"  class="form-control" id="imgn-Skill" autocomplete="off">
+                        <span *ngIf="formSk.get('imgSkill')?.invalid && formSk.get('imgSkill')?.touched" class="text-danger">El link de imagen es requerido</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="porcentage" class="form-label">Porcentaje</label>
+                        <input formControlName="porcentaje" type="text"  class="form-control" id="porcentage" autocomplete="off">
+                        <span *ngIf="formSk.get('porcentaje')?.invalid && formSk.get('porcentaje')?.touched" class="text-danger">El porcentaje es requerido</span>
+                    </div>
+                </form> 
+            </div>
+            <div class="modal-footer">
+                <button type="button"  class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="submit" (click)="editarSkill()" [disabled]="formSk.invalid" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Notificacion cuando no hay skills-->
+<div *ngIf="skills.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+    <div class="alert alert-info" role="alert">
+        <p>No hay habilidades para mostrar</p>
+    </div>
+</div>

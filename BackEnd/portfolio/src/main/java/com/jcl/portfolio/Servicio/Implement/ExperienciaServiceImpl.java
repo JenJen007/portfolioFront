@@ -9,9 +9,11 @@ import com.jcl.portfolio.Repositorio.ExperienciaRepository;
 import com.jcl.portfolio.Servicio.ExperienciaService;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 public class ExperienciaServiceImpl implements ExperienciaService{
     
     private final ExperienciaRepository experienciaRepository;

@@ -9,9 +9,11 @@ import com.jcl.portfolio.Repositorio.SkillRepository;
 import com.jcl.portfolio.Servicio.SkillService;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 public class SkillServiceImpl implements SkillService{
     
     private final SkillRepository skillRepository;

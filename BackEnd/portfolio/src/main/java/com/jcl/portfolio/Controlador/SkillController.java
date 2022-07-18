@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,7 +42,7 @@ public class SkillController {
         SkillResponseDTO skillId = skillService.findById(idSkill);
         return ResponseEntity.ok().body(skillId);
     }
-    
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/skills/nueva")
     public ResponseEntity<SkillResponseDTO>newSkill(@Valid @RequestBody SkillRequestDTO newSkill){
         try {
@@ -50,13 +51,13 @@ public class SkillController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/skills/{idSkill}")
     public SkillResponseDTO replaceSkill(@Valid @RequestBody SkillRequestDTO newSkill,
                                                @PathVariable("idSkill")Long idSkill){
         return skillService.update(newSkill, idSkill);
     }
-    
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/skills/{idSkill}")
     public void deleteSkill(@PathVariable("idSkill")Long idSkill){
         skillService.delete(idSkill);
