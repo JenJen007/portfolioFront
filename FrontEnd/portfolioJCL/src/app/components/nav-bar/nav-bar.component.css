@@ -29,6 +29,10 @@ i{
     color: #cf0072;
     font-size: 40px;
 }
+.fa-github {
+    color: #ffffff;
+    font-size: 40px;
+}
 /*--- Para la vista de celular ---*/
 @media(max-width:575px){
 .container-fluid{

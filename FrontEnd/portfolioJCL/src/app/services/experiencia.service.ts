@@ -8,7 +8,7 @@ import { Experiencia } from '../models/experiencia';
 })
 export class ExperienciaService {
 
-  private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = 'https://portfoliojennifercontreras.herokuapp.com/api';
 
   constructor(private http: HttpClient) { }
 
